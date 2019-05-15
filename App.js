@@ -22,6 +22,10 @@ export default class App extends Component<Props> {
           fontWeight: '300'
 
         }}>Book Review</Text>
+        <Text>La insoportable levedad del ser</Text>
+        <Text style={{ color: 'grey'}}>Milan Kundera</Text>
+        <Text>El perfume</Text>
+        <Text style={{ color: 'grey'}}>Patrick Süskind</Text>
       </View>
     );
   }
