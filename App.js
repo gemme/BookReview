@@ -8,8 +8,7 @@
 
 import React, {useState} from 'react';
 import {StyleSheet, TextInput , Text, View} from 'react-native';
-import HeaderStyle from './HeaderStyle';
-import Header from './Header';
+import Header from 'components/Header';
 
 
 const books = [
