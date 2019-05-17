@@ -6,8 +6,8 @@
  * @flow
  */
 
-import React, {Component} from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import React, {useState} from 'react';
+import {StyleSheet, TextInput , Text, View} from 'react-native';
 import HeaderStyle from './HeaderStyle';
 
 
@@ -19,13 +19,27 @@ const books = [
 ];
 
 type Props = {};
-export default class App extends Component<Props> {
-  render() {
+const App = (props: Props) => {
+
+  const [searchText, setSearchText] = useState('');
+
     return (
       <View style={styles.container}>
         <Text style={HeaderStyle.header}>Book Review</Text>
 
-        {books.map((book, i) => {
+        <TextInput
+          style={styles.txtInput}
+          placeholder='Search'
+          onChangeText={ text => {
+              setSearchText(text);
+          }}
+        />
+
+        {books
+          .filter(book => {
+            return book.title.toLocaleLowerCase().indexOf(searchText.toLocaleLowerCase()) > -1
+          })
+          .map((book, i) => {
           return (
             <View
             key={i}
@@ -49,8 +63,9 @@ export default class App extends Component<Props> {
         })}
       </View>
     );
-  }
-}
+};
+
+export default App;
 
 const styles = StyleSheet.create({
   'container': {
@@ -68,6 +83,15 @@ const styles = StyleSheet.create({
       flex: 8,
       flexDirection: 'column'
   },
-  'author': { color: 'grey'}
+  'author': { color: 'grey'},
+  'txtInput': {
+    marginBottom: 30,
+    padding: 10,
+    paddingHorizontal: 20,
+    fontSize: 16,
+    borderBottomWidth: 1,
+    borderColor: '#ddd',
+    backgroundColor: '#F5F5F5'
+  }
 });
 
