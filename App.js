@@ -9,7 +9,7 @@
 import React, {useState} from 'react';
 import {StyleSheet, TextInput , Text, View} from 'react-native';
 import HeaderStyle from './HeaderStyle';
-
+import Header from './Header';
 
 
 const books = [
@@ -25,7 +25,8 @@ const App = (props: Props) => {
 
     return (
       <View style={styles.container}>
-        <Text style={HeaderStyle.header}>Book Review</Text>
+
+      <Header />
 
         <TextInput
           style={styles.txtInput}
