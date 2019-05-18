@@ -7,9 +7,9 @@
  */
 
 import React, {useState} from 'react';
-import {StyleSheet, TextInput , Text, View, ScrollView} from 'react-native';
+import {StyleSheet, TextInput , Text, View, FlatList} from 'react-native';
 import Header from 'components/Header';
-
+import BookRow from 'components/BookRow';
 
 const books = [
   { title: 'El Perfume', author:'Patrick Süskind' },
@@ -55,36 +55,15 @@ const App = (props: Props) => {
               setSearchText(text);
           }}
         />
-        <ScrollView
-          contentContainerStyle={{paddingTop: 30}}
-        >
-        {books
-          .filter(book => {
-            return book.title.toLocaleLowerCase().indexOf(searchText.toLocaleLowerCase()) > -1
-          })
-          .map((book, i) => {
-          return (
-            <View
-            key={i}
-            style={[
-              styles.row,
-              {
-                backgroundColor: i % 2 === 0 ? 'white' : '#F3F3F7'
-              }
-            ]}>
-                <View style={styles.edges}>
-                <Text>{i + 1 } </Text>
-                </View>
-                <View style={styles.titleBook}>
-                  <Text>{book.title}</Text>
-                  <Text style={styles.author}>{`de ${book.author}`}</Text>
-                </View>
-                <View style={styles.edges}>
-                  <Text>Info</Text>
-                </View>
-            </View>)
-        })}
-        </ScrollView>
+        <FlatList
+          data={
+            books.filter(book => {
+                return book.title.toLocaleLowerCase().indexOf(searchText.toLocaleLowerCase()) > -1
+            })
+          }
+          renderItem={({item, index}) => <BookRow book={item} index={index}/>}
+          keyExtractor={item => item.name}
+        />
       </View>
     );
 };
@@ -95,19 +74,6 @@ const styles = StyleSheet.create({
   'container': {
       'flex':1
   },
-  'row': {
-    flexDirection: 'row'
-  },
-  'edges': {
-    flex:1,
-    alignItems: 'center',
-    justifyContent: 'center'
-  },
-  'titleBook': {
-      flex: 8,
-      flexDirection: 'column'
-  },
-  'author': { color: 'grey'},
   'txtInput': {
     padding: 10,
     paddingHorizontal: 20,
