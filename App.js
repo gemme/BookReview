@@ -7,13 +7,15 @@
  */
 
 import React, {useState, useEffect} from 'react';
-import {StyleSheet, TextInput , Text, View, FlatList} from 'react-native';
+import {StyleSheet, TextInput , Text, View, FlatList, Image} from 'react-native';
 import Header from 'components/Header';
 import BookRow from 'components/BookRow';
 
 import axios from 'axios';
 
 import  { API_URL } from './src/constants';
+
+import BookImage from 'assets/book.png';
 
 type Props = {};
 const App = (props: Props) => {
@@ -31,6 +33,19 @@ const App = (props: Props) => {
 
     return (
       <View style={styles.container}>
+
+      <View style={{
+        alignItems: 'center',
+        marginTop: 30
+      }}>
+        <Image
+          source={BookImage}
+          style={{
+            width: 50,
+            height: 50,
+          }}
+          />
+      </View>
 
       <Header />
 
