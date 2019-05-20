@@ -3,17 +3,17 @@ import {StyleSheet} from 'react-native';
 export default StyleSheet.create({
     'header': {
         textAlign: 'center',
-        fontSize: 30,
-        color: '#f44242',
-        padding: 50,
+        fontSize: 20,
+        color: 'black',
+        padding: 20,
         fontWeight: '100'
 
       },
       'iOSheader': {
         textAlign: 'center',
-        fontSize: 30,
-        color: '#f44242',
-        padding: 30,
+        fontSize: 20,
+        color: 'black',
+        padding: 20,
         fontWeight: '200'
 
       }
