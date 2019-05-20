@@ -11,7 +11,7 @@ import {IMG_URL} from '../constants';
 
 import Star from './Star';
 
-const BookRow = ({book, index}) => {
+const BookRow = ({book, index, navigation}) => {
     const [showInfo, setShowInfo] = useState(false);
     return (
         <View>
@@ -41,7 +41,7 @@ const BookRow = ({book, index}) => {
                 <View style={styles.edges}>
                     <TouchableOpacity
                         onPress={() => {
-                            setShowInfo(!showInfo);
+                            navigation.navigate('Info');
                         }}
                         style={styles.button}
                     >

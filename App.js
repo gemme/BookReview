@@ -5,83 +5,18 @@
  * @format
  * @flow
  */
+import React from 'react';
+import BookList from 'components/BookList';
+import BookInfo from 'components/BookInfo';
 
-import React, {useState, useEffect} from 'react';
-import {StyleSheet, TextInput , Text, View, FlatList, Image} from 'react-native';
-import Header from 'components/Header';
-import BookRow from 'components/BookRow';
-
-import axios from 'axios';
-
-import  { API_URL } from './src/constants';
-
-import BookImage from 'assets/book.png';
+import {createStackNavigator, createAppContainer} from 'react-navigation';
 
 type Props = {};
-const App = (props: Props) => {
+const AppNavigator = createStackNavigator({
+    Home: { screen:  BookList},
+    Info: { screen:  BookInfo}
+  });
 
-  const [searchText, setSearchText] = useState('');
+export default createAppContainer(AppNavigator);
 
-  const [books, setBooks] = useState([]);
-
-  useEffect(() => {
-    axios
-      .get(`${API_URL}Books`)
-      .then(({data}) => setBooks(data))
-      .catch(err => console.error('My error', err))
-  }, []);
-
-    return (
-      <View style={styles.container}>
-
-      <View style={{
-        alignItems: 'center',
-        marginTop: 30
-      }}>
-        <Image
-          source={BookImage}
-          style={{
-            width: 50,
-            height: 50,
-          }}
-          />
-      </View>
-
-      <Header />
-
-        <TextInput
-          style={styles.txtInput}
-          placeholder='Search'
-          onChangeText={ text => {
-              setSearchText(text);
-          }}
-        />
-        <FlatList
-          data={
-            books.filter(book => {
-                return book.title.toLocaleLowerCase().indexOf(searchText.toLocaleLowerCase()) > -1
-            })
-          }
-          renderItem={({item, index}) => <BookRow book={item} index={index}/>}
-          keyExtractor={item => item.name}
-        />
-      </View>
-    );
-};
-
-export default App;
-
-const styles = StyleSheet.create({
-  'container': {
-      'flex':1
-  },
-  'txtInput': {
-    padding: 10,
-    paddingHorizontal: 20,
-    fontSize: 16,
-    borderBottomWidth: 1,
-    borderColor: '#ddd',
-    backgroundColor: '#F5F5F5'
-  }
-});
 
