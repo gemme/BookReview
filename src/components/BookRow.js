@@ -9,6 +9,8 @@ import {
 
 import {IMG_URL} from '../constants';
 
+import Star from './Star';
+
 const BookRow = ({book, index}) => {
     const [showInfo, setShowInfo] = useState(false);
     return (
@@ -28,9 +30,13 @@ const BookRow = ({book, index}) => {
                         }}
                     />
                 </View>
-                <View style={styles.titleBook}>
-                    <Text>{book.title}</Text>
-                    <Text style={styles.author}>{`de ${book.author}`}</Text>
+                <View
+                    style={styles.bookContainer}>
+                    <View style={styles.titleBook}>
+                        <Text>{book.title}</Text>
+                        <Text style={styles.author}>{`de ${book.author}`}</Text>
+                    </View>
+                    <Star rating={book.rating}/>
                 </View>
                 <View style={styles.edges}>
                     <TouchableOpacity
@@ -64,14 +70,17 @@ const styles = StyleSheet.create({
       justifyContent: 'center',
       minWidth: 50
     },
-    'titleBook': {
+    'bookContainer': {
         flex: 8,
         flexDirection: 'column',
         alignItems: 'flex-start',
-        justifyContent: 'center',
+        justifyContent: 'center'
+    },
+    'titleBook':{
+        fontSize: 200
     },
     'author': { color: 'grey'},
-    button: {
+    'button': {
         borderWidth: 1,
         borderColor: '#000000',
         borderRadius: 10,
