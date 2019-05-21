@@ -12,7 +12,7 @@ import BookImage from 'assets/book.png';
 type Props = {};
 
 const BookList = ({navigation}: Props) => {
-    debugger;
+
     const [searchText, setSearchText] = useState('');
 
     const [books, setBooks] = useState([]);
@@ -49,13 +49,13 @@ const BookList = ({navigation}: Props) => {
             }}
             />
             <FlatList
-            data={
-                books.filter(book => {
-                    return book.title.toLocaleLowerCase().indexOf(searchText.toLocaleLowerCase()) > -1
-                })
-            }
-            renderItem={({item, index}) => <BookRow book={item} index={index} navigation={navigation}/>}
-            keyExtractor={item => item.name}
+                data={
+                    books.filter(book => {
+                        return book.title.toLocaleLowerCase().indexOf(searchText.toLocaleLowerCase()) > -1
+                    })
+                }
+                renderItem={({item, index}) => <BookRow book={item} index={index} navigation={navigation}/>}
+                keyExtractor={item => item.id}
             />
     </View>
     );

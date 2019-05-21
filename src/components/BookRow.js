@@ -41,7 +41,9 @@ const BookRow = ({book, index, navigation}) => {
                 <View style={styles.edges}>
                     <TouchableOpacity
                         onPress={() => {
-                            navigation.navigate('Info');
+                            navigation.navigate('Info', {
+                                book
+                            });
                         }}
                         style={styles.button}
                     >
@@ -77,7 +79,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center'
     },
     'titleBook':{
-        fontSize: 200
+        fontWeight: '200'
     },
     'author': { color: 'grey'},
     'button': {
