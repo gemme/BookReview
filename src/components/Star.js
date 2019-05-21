@@ -3,15 +3,15 @@ import { View, StyleSheet } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 
-const Star = ({rating}) => {
+const Star = ({rating, size="small", color="#FFD64C"}) => {
 
     const TOTAL_STARS =[0,1,2,3,4];
 
     return (
         <View style={styles.stars}>
             {TOTAL_STARS.map(star => {
-                const color = rating > star ? "#FFD64C" : 'grey';
-                return  <Icon name="star" color={color}/>;
+                const recolor = rating > star ? color : 'grey';
+                return  <Icon size={resize(size)} name="star" color={recolor}/>;
             })}
         </View>
     );
@@ -25,3 +25,13 @@ const styles = StyleSheet.create({
         paddingVertical: 10
     }
 });
+
+const resize = size => {
+    switch(size) {
+        case 'small':   return 12;
+        case 'medium':  return 20;
+        case 'large':   return 30;
+        default:        return 12;
+    }
+}
+
