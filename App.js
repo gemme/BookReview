@@ -15,6 +15,18 @@ type Props = {};
 const AppNavigator = createStackNavigator({
     Home: { screen:  BookList},
     Info: { screen:  BookInfo}
+  }, {
+    defaultNavigationOptions: {
+      title: 'Book Info',
+      headerStyle: {
+          backgroundColor: 'black',
+          color: 'white'
+      },
+      headerTintColor: 'white',
+      headerTitleColor: {
+          color: 'white'
+      }
+    }
   });
 
 export default createAppContainer(AppNavigator);

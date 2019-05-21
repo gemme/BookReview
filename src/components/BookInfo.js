@@ -4,8 +4,11 @@ import {
     Text
 } from 'react-native';
 
-export default () => (
+ const BookInfo = () => (
     <View>
         <Text>Book Info</Text>
     </View>
 );
+
+export default BookInfo;
+
