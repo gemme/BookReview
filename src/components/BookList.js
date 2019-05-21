@@ -61,11 +61,17 @@ const BookList = ({navigation}: Props) => {
     );
 };
 
+// Disable header is enabled by default
+BookList.navigationOptions = {
+    header: null
+};
+
 export default BookList;
 
 const styles = StyleSheet.create({
     'container': {
-        'flex':1
+        'flex':1,
+        'backgroundColor': '#FFF'
     },
     'txtInput': {
       padding: 10,

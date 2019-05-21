@@ -15,6 +15,5 @@ export default StyleSheet.create({
         color: 'black',
         padding: 20,
         fontWeight: '200'
-
       }
 });
