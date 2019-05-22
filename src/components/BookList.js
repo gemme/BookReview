@@ -9,20 +9,19 @@ import  { API_URL } from '../constants';
 import BookRow from 'components/BookRow';
 import BookImage from 'assets/book.png';
 
+import {connect} from 'react-redux';
+
+import * as bookActions from 'redux-store/actions/book';
+
 type Props = {};
 
-const BookList = ({navigation}: Props) => {
+const BookList = ({navigation, books, loadBooks}: Props) => {
 
     const [searchText, setSearchText] = useState('');
 
-    const [books, setBooks] = useState([]);
+    // dispatching an action throught a useEffect hook
+    useEffect(() => loadBooks(), []);
 
-    useEffect(() => {
-      axios
-        .get(`${API_URL}Books`)
-        .then(({data}) => setBooks(data))
-        .catch(err => console.error('My error', err))
-    }, []);
 
     return (
     <View style={styles.container}>
@@ -66,7 +65,20 @@ BookList.navigationOptions = {
     header: null
 };
 
-export default BookList;
+const mapStateToProps = (state) => {
+    const { book } = state;
+    return {
+        books: book.books
+    }
+};
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        loadBooks: () => dispatch(bookActions.loadBooks())
+    }
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(BookList);
 
 const styles = StyleSheet.create({
     'container': {
