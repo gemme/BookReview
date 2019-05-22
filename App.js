@@ -9,6 +9,7 @@ import React from 'react';
 import BookList from 'components/BookList';
 import BookInfo from 'components/BookInfo';
 import About from 'components/About';
+import AddReview from 'components/AddReview';
 
 import {createStackNavigator, createAppContainer, createBottomTabNavigator} from 'react-navigation';
 
@@ -55,8 +56,19 @@ const TabNavigator = createBottomTabNavigator({
         inactiveTintColor: 'lightgrey',
         activeTintColor: 'black',
     }
+  });
+
+  const MainNavigator = createStackNavigator({
+    Tabs: {screen: TabNavigator},
+    AddReview: {screen: AddReview}
+  }, {
+    mode: 'modal',
+    headerMode: 'none',
+    defaultNavigationOptions: {
+      gesturesEnabled: false
+    }
   })
 
-export default createAppContainer(TabNavigator);
+export default createAppContainer(MainNavigator);
 
 
