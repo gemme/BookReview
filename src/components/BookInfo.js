@@ -4,7 +4,7 @@ import {
     Text,
     Image,
     StyleSheet,
-    ScrollView
+    TouchableOpacity
 } from 'react-native';
 
 import { IMG_URL } from '../constants';
@@ -29,6 +29,16 @@ import ReviewList from './ReviewList';
                     <Text style={styles.title}>{book.title}</Text>
                     <Text style={styles.author}>{`de ${book.author}`}</Text>
                     <Star rating={book.rating}/>
+                    <TouchableOpacity
+                        style={styles.button}
+                        onPress={() => {
+                            navigation.navigate('AddReview', {
+                                bookId: book.id
+                            });
+                        }}
+                    >
+                        <Text style={styles.info}>Add Review</Text>
+                    </TouchableOpacity>
                 </View>
             </View>
             {book && <ReviewList bookId={book.id} />}
@@ -56,5 +66,17 @@ const styles = StyleSheet.create({
     author: {
         fontSize: 10,
         color: 'grey'
+    },
+    button: {
+        flex:1,
+        alignItems: 'center',
+        borderWidth: 1,
+        borderColor: '#000000',
+        borderRadius: 10,
+        paddingHorizontal: 10,
+        paddingVertical: 2
+    },
+    info:{
+        fontSize: 10
     }
 });
