@@ -18,6 +18,8 @@ const ReviewList = ({bookId}) => {
 
     const [reviews, setReviews] = useState([]);
 
+    console.log('ReviewList', reviews);
+
     useEffect(() => {
         axios
             .get(`${API_URL}Books/${bookId}/reviews`)

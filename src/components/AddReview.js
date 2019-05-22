@@ -1,20 +1,29 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
     View,
     Text,
     TouchableOpacity,
     StyleSheet,
-    TextInput
+    TextInput,
+    ActivityIndicator
 } from 'react-native';
 import {
     KeyboardAwareScrollView
  } from "react-native-keyboard-aware-scroll-view";
 import Icon from 'react-native-vector-icons/FontAwesome';
 
-const AddReview = ({navigation}) => {
-    const [name, setName] = useState(null);
+import axios from 'axios';
+
+import { API_URL } from '../constants';
+
+const AddReview = ({ navigation}) => {
+    const [userName, setUserName] = useState(null);
     const [rating, setRating] = useState(0);
     const [review, setReview] = useState(null);
+    const [submitting, setSubmitting] = useState(false);
+
+    const bookId = navigation.getParam('bookId');
+
     return (
         <KeyboardAwareScrollView
             style={{
@@ -35,8 +44,8 @@ const AddReview = ({navigation}) => {
                 <TextInput
                     style={styles.input}
                     placeholder={"Name (optional)"}
-                    value={name}
-                    onChangeText={name => setName(name)}
+                    value={userName}
+                    onChangeText={name => setUserName(name)}
                     />
                 <Text style={styles.rating}>Your rating:</Text>
                 <View
@@ -57,6 +66,7 @@ const AddReview = ({navigation}) => {
                         })
                     }
                 </View>
+                {submitting && <ActivityIndicator size="large" color="black"/>}
                 <TextInput
                     style={[
                         styles.input,
@@ -69,7 +79,8 @@ const AddReview = ({navigation}) => {
                     numberOfLines={5}
                     />
                 <TouchableOpacity
-                    style={styles.submitButton}>
+                    style={styles.submitButton}
+                    onPress={() => submitReview({ navigation, setSubmitting, userName, rating, review, bookId })}>
                     <Text
                         style={styles.submitButtonText}>Submit Review</Text>
                 </TouchableOpacity>
@@ -79,6 +90,29 @@ const AddReview = ({navigation}) => {
 };
 
 export default AddReview;
+
+const submitReview = ({navigation, setSubmitting, userName, rating, review, bookId}) => {
+    setSubmitting(true);
+    const data = {
+        bookId,
+        userName,
+        rating,
+        description: review
+    };
+    console.log('url', `${API_URL}Reviews`);
+    console.log('data', data);
+    axios
+        .post(`${API_URL}Reviews`, data)
+        .then(response => {
+            console.log('response', response);
+            setSubmitting(false);
+            navigation.goBack();
+        })
+        .catch(err => {
+            console.error(err)
+            setSubmitting(false);
+        });
+};
 
 const styles = StyleSheet.create({
     root: {
