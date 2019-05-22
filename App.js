@@ -8,10 +8,16 @@
 import React from 'react';
 import BookList from 'components/BookList';
 import BookInfo from 'components/BookInfo';
+import About from 'components/About';
 
-import {createStackNavigator, createAppContainer} from 'react-navigation';
+import {createStackNavigator, createAppContainer, createBottomTabNavigator} from 'react-navigation';
+
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 type Props = {};
+
+
+
 const AppNavigator = createStackNavigator({
     Home: { screen:  BookList},
     Info: { screen:  BookInfo}
@@ -29,6 +35,28 @@ const AppNavigator = createStackNavigator({
     }
   });
 
-export default createAppContainer(AppNavigator);
+const TabNavigator = createBottomTabNavigator({
+    List: {screen: AppNavigator},
+    About: {screen: About}
+  }, {
+    defaultNavigationOptions:({navigation}) => {
+      return {
+        tabBarIcon: ({tintColor}) => {
+          const route = navigation.state.routeName;
+          const name = {
+            'List': 'list',
+            'About': 'info-circle'
+          }[route];
+          return <Icon name={name} color={tintColor} size={23} />
+        }
+      }
+    }, tabBarOptions: {
+        activeBackgroundColor: 'lightgrey',
+        inactiveTintColor: 'lightgrey',
+        activeTintColor: 'black',
+    }
+  })
+
+export default createAppContainer(TabNavigator);
 
 
