@@ -9,9 +9,9 @@ const Star = ({rating, size="small", color="#FFD64C"}) => {
 
     return (
         <View style={styles.stars}>
-            {TOTAL_STARS.map(star => {
+            {TOTAL_STARS.map((star, i) => {
                 const recolor = rating > star ? color : 'grey';
-                return  <Icon size={resize(size)} name="star" color={recolor}/>;
+                return  <Icon size={resize(size)} name="star" color={recolor} key={i}/>;
             })}
         </View>
     );

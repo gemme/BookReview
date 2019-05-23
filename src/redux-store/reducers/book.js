@@ -6,13 +6,14 @@ const INITIAL_STATE = {
 
 
 const book = (state = INITIAL_STATE, action) => {
+    console.log('redicer::book');
     switch(action.type){
         case 'LOAD_BOOKS':
             return {
                 ...state,
                 books: action.data
             };
-        default: return INITIAL_STATE;
+        default: return state;
     }
 
 };

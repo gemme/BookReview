@@ -3,7 +3,6 @@ import React, {useState, useEffect} from 'react';
 import {StyleSheet, TextInput , Text, View, FlatList, Image} from 'react-native';
 import Header from 'components/Header';
 
-import axios from 'axios';
 
 import  { API_URL } from '../constants';
 import BookRow from 'components/BookRow';
@@ -19,8 +18,13 @@ const BookList = ({navigation, books, loadBooks}: Props) => {
 
     const [searchText, setSearchText] = useState('');
 
+    console.log('books', books);
+
     // dispatching an action throught a useEffect hook
-    useEffect(() => loadBooks(), []);
+    useEffect(() => {
+        console.log('loadBooks');
+        loadBooks()
+    }, []);
 
 
     return (
@@ -66,7 +70,7 @@ BookList.navigationOptions = {
 };
 
 const mapStateToProps = (state) => {
-    const { book } = state;
+    const {book} = state;
     return {
         books: book.books
     }
