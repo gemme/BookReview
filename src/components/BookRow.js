@@ -12,7 +12,7 @@ import {IMG_URL} from '../constants';
 import Star from './Star';
 
 const BookRow = ({book, index, navigation}) => {
-    const [showInfo, setShowInfo] = useState(false);
+
     return (
         <View>
             <View
@@ -51,10 +51,6 @@ const BookRow = ({book, index, navigation}) => {
                     </TouchableOpacity>
                 </View>
             </View>
-            {showInfo &&
-                <View>
-                    <Text>Book Info</Text>
-                </View>}
         </View>
     )
 };

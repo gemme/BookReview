@@ -12,15 +12,16 @@ import {
  } from "react-native-keyboard-aware-scroll-view";
 import Icon from 'react-native-vector-icons/FontAwesome';
 
-import axios from 'axios';
 
-import { API_URL } from '../constants';
 
-const AddReview = ({ navigation}) => {
+import * as reviewActions from 'redux-store/actions/review';
+
+import {connect} from 'react-redux';
+
+const AddReview = ({ navigation, submitReview, submitting}) => {
     const [userName, setUserName] = useState(null);
     const [rating, setRating] = useState(0);
     const [review, setReview] = useState(null);
-    const [submitting, setSubmitting] = useState(false);
 
     const bookId = navigation.getParam('bookId');
 
@@ -35,6 +36,7 @@ const AddReview = ({ navigation}) => {
                 <TouchableOpacity
                     style={styles.button}
                     onPress={() => {
+                        console.log('goBack');
                         navigation.goBack();
                     }}
                     >
@@ -80,7 +82,7 @@ const AddReview = ({ navigation}) => {
                     />
                 <TouchableOpacity
                     style={styles.submitButton}
-                    onPress={() => submitReview({ navigation, setSubmitting, userName, rating, review, bookId })}>
+                    onPress={() => submitReview({ navigation, userName, rating, review, bookId })}>
                     <Text
                         style={styles.submitButtonText}>Submit Review</Text>
                 </TouchableOpacity>
@@ -89,9 +91,22 @@ const AddReview = ({ navigation}) => {
     );
 };
 
-export default AddReview;
+const mapDispatchToProps = (dispatch) => {
+    return  {
+        submitReview: (props) => dispatch(reviewActions.submitReview(props))
+    }
+};
 
-const submitReview = ({navigation, setSubmitting, userName, rating, review, bookId}) => {
+const mapStateToProps = (state) => {
+    const {review} = state;
+    return {
+        submitting: review.submitting
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(AddReview);
+
+/* const submitReview = ({navigation, setSubmitting, userName, rating, review, bookId}) => {
     setSubmitting(true);
     const data = {
         bookId,
@@ -112,7 +127,7 @@ const submitReview = ({navigation, setSubmitting, userName, rating, review, book
             console.error(err)
             setSubmitting(false);
         });
-};
+}; */
 
 const styles = StyleSheet.create({
     root: {

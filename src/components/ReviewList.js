@@ -8,26 +8,17 @@ import {
 
 import { useEffect, useState } from 'react';
 
-import axios from 'axios';
-
-import { API_URL } from '../constants';
-
 import ReviewRow from './ReviewRow';
 
-const ReviewList = ({bookId}) => {
+import {connect} from 'react-redux';
 
-    const [reviews, setReviews] = useState([]);
+import * as reviewActions from 'redux-store/actions/review';
+
+const ReviewList = ({bookId, loadReviewsByBookId, reviews}) => {
 
     console.log('ReviewList', reviews);
 
-    useEffect(() => {
-        axios
-            .get(`${API_URL}Books/${bookId}/reviews`)
-            .then(response => {
-                setReviews(response.data)
-            })
-            .catch(err => console.error('ReviewList: ', err));
-    },[]);
+    useEffect(() => loadReviewsByBookId(),[bookId]);
 
     return (
         <View style={styles.container}>
@@ -47,7 +38,21 @@ const ReviewList = ({bookId}) => {
     );
 };
 
-export default ReviewList;
+const mapStateTopProps = (state) => {
+    const {review} = state;
+    return {
+        reviews: review.reviews
+    };
+};
+
+const mapDispatchToProps = (dispatch,  ownProps) => {
+    return {
+        loadReviewsByBookId: () => dispatch(reviewActions.loadReviewsByBookId(ownProps.bookId))
+    };
+};
+
+export default connect(mapStateTopProps, mapDispatchToProps)(ReviewList);
+//export default ReviewList;
 
 const styles = StyleSheet.create({
     container: {

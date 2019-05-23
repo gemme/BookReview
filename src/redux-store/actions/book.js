@@ -8,7 +8,7 @@ export const loadBooks = () => {
         axios
             .get(`${API_URL}Books`)
             .then(({data}) => {
-                dispatch({
+                return dispatch({
                     type: 'LOAD_BOOKS',
                     data
                 })

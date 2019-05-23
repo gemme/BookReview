@@ -75,8 +75,8 @@ const TabNavigator = createBottomTabNavigator({
   const AppContainer = createAppContainer(MainNavigator)
 
 
+const store = configureStore();
 export default () => {
-  const store = configureStore();
   return (
     <Provider store={store}>
       <AppContainer />
