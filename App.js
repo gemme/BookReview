@@ -15,6 +15,9 @@ import {createStackNavigator, createAppContainer, createBottomTabNavigator} from
 
 import Icon from 'react-native-vector-icons/FontAwesome';
 
+import {Provider} from 'react-redux';
+import configureStore from 'redux-store/configureStore';
+
 type Props = {};
 
 
@@ -69,6 +72,17 @@ const TabNavigator = createBottomTabNavigator({
     }
   })
 
-export default createAppContainer(MainNavigator);
+  const Main = createAppContainer(TabNavigator);
+  const store = configureStore();
+
+  const App = () => {
+      return (
+        <Provider store={store}>
+          <Main />
+        </Provider>
+      )
+  }
+
+export default  App;
 
 
