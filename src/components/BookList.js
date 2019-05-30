@@ -74,8 +74,9 @@ BookList.navigationOptions = {
 };
 
 const mapStateToProps = (state) => {
+    //state.reviews
     return {
-        books: state.books
+        books: state.mybook.books
     };
 };
 

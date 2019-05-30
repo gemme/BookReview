@@ -2,11 +2,11 @@
 
 import { createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
-import book from './reducers/book';
+import rootReducer from './reducers/rootReducer';
 
 
 const configureStore = () => {
-    const store  = createStore(book, applyMiddleware(thunk));
+    const store  = createStore(rootReducer, applyMiddleware(thunk));
     return store;
 };
 
