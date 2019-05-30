@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 import {
     View,
@@ -13,11 +13,32 @@ import Star from './Star';
 
 import moment from 'moment';
 
+import axios from 'axios';
+
 const ReviewRow = ({review}) => {
+    const [userImage, setUserImage] = useState(null);
+
+    useEffect(() => {
+        axios.get('https://bookreviews-api.herokuapp.com/api/Containers/photos/download/gemme.jpg')
+            .then(response => {
+                if(response.config){
+                    setUserImage({
+                        uri: response.config.url
+                    });
+                }else{
+                    setUserImage(DefaultUser);
+                }
+            })
+            .catch(err => {
+                console.log(err);
+                setUserImage(DefaultUser);
+            })
+    }, []);
+
     return (
         <View style={styles.container}>
            <View style={styles.userInfo}>
-                <Image source={DefaultUser} style={{
+                <Image source={userImage} style={{
                     width: 30,
                     height: 30
                 }}/>

@@ -18,6 +18,8 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import { Provider } from 'react-redux';
 import configureStore from 'redux-store/configureStore';
 
+import CameraApp from 'components/CameraApp';
+
 type Props = {};
 
 
@@ -63,7 +65,8 @@ const TabNavigator = createBottomTabNavigator({
 
   const MainNavigator = createStackNavigator({
     Tabs: {screen: TabNavigator},
-    AddReview: {screen: AddReview}
+    AddReview: {screen: AddReview},
+    CameraApp: {screen: CameraApp}
   }, {
     mode: 'modal',
     headerMode: 'none',
