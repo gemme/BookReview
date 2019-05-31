@@ -4,17 +4,24 @@ import {
     Text,
     TouchableOpacity,
     StyleSheet,
-    TextInput
+    TextInput,
+    ActivityIndicator
 } from 'react-native';
 import {
     KeyboardAwareScrollView
  } from "react-native-keyboard-aware-scroll-view";
 import Icon from 'react-native-vector-icons/FontAwesome';
 
+import axios from 'axios';
+import { API_URL } from '../constants';
+
 const AddReview = ({navigation}) => {
     const [name, setName] = useState(null);
     const [rating, setRating] = useState(0);
     const [review, setReview] = useState(null);
+    const [loading, setLoading] = useState(false);
+    const bookId = navigation.getParam('bookId');
+
     return (
         <KeyboardAwareScrollView
             style={{
@@ -68,8 +75,22 @@ const AddReview = ({navigation}) => {
                     multiline={true}
                     numberOfLines={5}
                     />
+                {loading && <ActivityIndicator size="large" color="black"/>}
                 <TouchableOpacity
-                    style={styles.submitButton}>
+                    style={styles.submitButton}
+                    onPress={
+                        () => {
+                            submitReview({
+                                name,
+                                rating,
+                                review,
+                                setLoading,
+                                bookId,
+                                navigation
+                            })
+                        }
+                    }
+                    >
                     <Text
                         style={styles.submitButtonText}>Submit Review</Text>
                 </TouchableOpacity>
@@ -79,6 +100,54 @@ const AddReview = ({navigation}) => {
 };
 
 export default AddReview;
+
+
+const submitReview = ({
+    name,
+    rating,
+    review,
+    setLoading,
+    bookId,
+    navigation
+}) => {
+    setLoading(true);
+    //https://bookreviews-api.herokuapp.com/api/Books/bookId/reviews
+    const data = {
+        userName: name,
+        rating,
+        description: review
+    };
+    axios.post(`${API_URL}Books/${bookId}/reviews`, data)
+        .then(response => {
+            setLoading(false);
+            navigation.goBack();
+        })
+        .catch(err => {
+            setLoading(false);
+            console.log(err);
+        })
+
+/*
+
+https://bookreviews-api.herokuapp.com/api/Books/bookId/reviews
+{
+  "userName": "string",
+  "rating": 0,
+  "date": "2019-05-30T20:59:22.698Z",
+  "description": "string"
+}
+
+
+https://bookreviews-api.herokuapp.com/api/Reviews
+ {
+  "userName": "string",
+  "rating": 0,
+  "date": "2019-05-30T20:59:22.804Z",
+  "description": "string",
+  "bookId": "string"
+    }
+ */
+};
 
 const styles = StyleSheet.create({
     root: {
