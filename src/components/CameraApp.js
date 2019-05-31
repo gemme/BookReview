@@ -49,6 +49,7 @@ async function takePicture (refContainer) {
   if (refContainer.current) {
     const options = { quality: 0.5, base64: true };
     const data = await refContainer.current.takePictureAsync(options);
+    console.log(JSON.stringify(data));
     console.log(data);
     const formData = new FormData();
     formData.append('avatar', {
@@ -58,14 +59,16 @@ async function takePicture (refContainer) {
     });
     const config = {
       headers: { 'content-type': 'multipart/form-data' }
-  }
+    };
     axios.post(
       'https://bookreviews-api.herokuapp.com/api/Containers/photos/upload',
       formData,
       config
     )
       .then(response => console.log('response::image::sent', response))
-      .catch(err => console.log('not sent'));
+      .catch(err => {
+        console.log('not sent')
+      });
 
   }
 };
